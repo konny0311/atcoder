@@ -1,8 +1,23 @@
-n = int(input('200までの整数を入力:'))
+n = int(input())
 numList = []
-for i in range(n):
-    numList.append(int(input()));
+for i in input().split():
+    numList.append(int(i));
 
-while len(numList) == n:
-    #'2で割っても整数'という条件分岐入れたい
-    numList = list(filter(lambda x: x / 2, numList))
+num = 0
+even = True
+while even:
+    for i, each in enumerate(numList):
+        if each % 2 != 0:
+            even = False
+        numList[i] = each / 2
+    num += 1
+print(num-1)
+
+#より良い回答
+n = input()
+a = list(map(int, input().split()))
+cnt = 0
+while all(i%2==0 for i in a):
+    a = [i/2 for i in a]
+    cnt +=1
+print(cnt)
