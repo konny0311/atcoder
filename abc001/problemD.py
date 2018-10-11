@@ -11,6 +11,8 @@ def trimNum(num:int):
         num = str(int(num[:2])+1)+'00'
     return num
 
+# TODO 処理時間制限を超えてしまう。まだ間違えてる問題もある
+# TODO 解説後、対象時間を塗り絵、塗り絵の範囲が出力内容。いもす法
 def appendingTime(times:list):
     isAppended = False
     returnList = []
@@ -21,21 +23,26 @@ def appendingTime(times:list):
         start = times[i][0]
         end = times[i][1]
         if i == len(times)-1:
-            returnList.append([start, nextEnd])
-            return returnList
+            returnList.append([start, end])
+            break
+            # return returnList
         nextStart = times[i+1][0]
         nextEnd = times[i+1][1]
         if end >= nextStart: #次のリストと合体
-            returnList.append([start, nextEnd])
+            if nextEnd > end:
+                returnList.append([start, nextEnd])
+            else:
+                returnList.append([start, end])
             isAppended = True #合体したら次のリストはスキップしたい
         else:
             returnList.append([start, end])
-    print('前:' + str(len(times)))
-    print('後:' + str(len(returnList)))
+    # print('前:' + str(len(times)))
+    # print('後:' + str(len(returnList)))
     if len(times) == len(returnList): #合体ない
         return returnList
     else:
-        print('再帰処理')
+        # print('再帰処理')
+        # print(returnList)
         return appendingTime(returnList) #再帰処理上手く行ってない
 
 
@@ -53,10 +60,9 @@ for i in range(0,n):
     #for文でずらしながら前後で終了時刻と開始時刻を比較する
 times.sort()
 times = getUniqueList(times)
-print(times)
-print('テスト')
+# print(times)
+# print('テスト')
 returnList = appendingTime(times)
-returnList = appendingTime(returnList)
 # returnList = []
 # point = 0
 # endTimeAppend = 0
@@ -79,10 +85,10 @@ returnList = appendingTime(returnList)
 #             returnList.append([start, end])
 #             point = j
 #             break
-print(returnList)
-returnList.sort()
+# print(returnList)
+# returnList.sort()
 for each in returnList:
     start = trimNum(each[0])
     end = trimNum(each[1])
-    print('出力')
+    # print('出力')
     print('{}-{}'.format(start, end))
